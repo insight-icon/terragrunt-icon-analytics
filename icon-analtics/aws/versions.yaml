@@ -1,0 +1,22 @@
+dev:
+  k8s-cluster: master
+  k8s-config: master
+  network: master
+  rds: master
+  redshift: master
+  s3: master
+  airflow-vm: master
+  dash: master
+  superset: master
+
+prod:
+  k8s-cluster: master
+  k8s-config: master
+  network: master
+  rds: master
+  redshift: master
+  s3: master
+  airflow-vm: master
+  dash: master
+  superset: master
+
