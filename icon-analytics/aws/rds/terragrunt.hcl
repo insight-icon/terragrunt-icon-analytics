@@ -20,24 +20,25 @@ dependency "network" {
 }
 
 inputs = {
-  identifier = local.vars.id
-  name = "${local.vars.name}-rds"
+  identifier = "icon-alytics"
+  name = "icon"
+  final_snapshot_identifier = "demodb"
 
   subnet_ids = dependency.network.outputs.public_subnets
-  vpc_security_group_ids = [dependency.network.outputs.rds_security_group_id]
+  vpc_security_group_ids = [dependency.network.outputs.sg_rds_id]
 
   allocated_storage = 5
 
   engine            = "postgres"
-  engine_version    = "9.6.9"
+  family = "postgres12"
+  major_engine_version = "12"
+  engine_version    = "12.3"
+
   instance_class    = "db.t2.large"
-  family = "postgres9.6"
-  major_engine_version = "9.6"
 
   allocated_storage = 5
   storage_encrypted = false
 
-  final_snapshot_identifier = "demodb"
   username = local.vars.secrets.rds_admin_user
   password = local.vars.secrets.rds_admin_password
   port     = "5432"
