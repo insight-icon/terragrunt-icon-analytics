@@ -1,5 +1,5 @@
 terraform {
-  source = "github.com/insight-infrastructure/terraform-aws-ec2-airflow-master.git?ref=${local.vars.versions.superset_ec2}"
+  source = "github.com/terraform-aws-modules/terraform-aws-redshift.git?ref=${local.vars.versions.redshift}"
 }
 
 include {
@@ -21,6 +21,19 @@ dependency "network" {
 
 inputs = {
   vpc_id = dependency.network.outputs.vpc_id
-  subnet_ids = dependency.network.outputs.public_subnets
-  security_group_id = dependency.network.outputs.vault_security_group_id
+
+  cluster_identifier      = local.vars.id
+  final_snapshot_identifier = local.vars.id
+
+  cluster_number_of_nodes = 1
+
+  cluster_database_name   = "icon"
+  cluster_master_username = local.vars.secrets.redshift_admin_user
+  cluster_master_password = local.vars.secrets.redshift_admin_password
+  # Group parameters
+  wlm_json_configuration = "[{\"query_concurrency\": 5}]"
+
+  # DB Subnet Group Inputs
+  vpc_security_group_ids = [dependency.network.outputs.sg_redshift_id]
+  subnets = dependency.network.outputs.public_subnets
 }

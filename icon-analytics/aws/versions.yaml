@@ -3,7 +3,7 @@ dev:
   k8s-config: master
   network: master
   rds: master
-  redshift: master
+  redshift: v2.5.0
   s3: master
   airflow-vm: master
   dash: master
@@ -14,7 +14,7 @@ prod:
   k8s-config: master
   network: master
   rds: master
-  redshift: master
+  redshift: v2.5.0
   s3: master
   airflow-vm: master
   dash: master

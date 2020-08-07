@@ -6,8 +6,12 @@ locals {
   versions = yamldecode(file("versions.yaml"))[local.env]
 
   environment = {
-    dev = {}
-    prod = {}
+    dev = {
+      cluster_node_type = "dc1.large"
+    }
+    prod = {
+      cluster_node_type = "dc1.large"
+    }
   }[local.env]
 
   # Labels
