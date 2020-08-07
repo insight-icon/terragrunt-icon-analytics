@@ -4,9 +4,8 @@ locals {
 
 inputs = merge(
 local.vars,
-local.vars.run,
-local.vars.ssh_profile,
-local.vars.deployment_vars,
+local.vars.environment,
+local.vars.secrets,
 )
 
 generate "provider" {
@@ -14,7 +13,7 @@ generate "provider" {
   if_exists = "skip"
   contents =<<-EOF
 provider "aws" {
-  region = "${local.vars.run.region}"
+  region = "${local.vars.region}"
   skip_get_ec2_platforms     = true
   skip_metadata_api_check    = true
   skip_region_validation     = true

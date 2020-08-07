@@ -5,6 +5,11 @@ locals {
   secrets = yamldecode(file(find_in_parent_folders("secrets.yml")))[local.env]
   versions = yamldecode(file("versions.yaml"))[local.env]
 
+  environment = {
+    dev = {}
+    prod = {}
+  }[local.env]
+
   # Labels
   name = "icon-analytics-${local.env}"
   id = "icon-analytics-${local.env}"
