@@ -1,5 +1,5 @@
 terraform {
-  source = "github.com/insight-infrastructure/terraform-aws-ec2-airflow-master.git?ref=${local.vars.versions.superset_ec2}"
+  source = "github.com/insight-infrastructure/terraform-aws-ec2-airflow.git?ref=${local.vars.versions.airflow-vm}"
 }
 
 include {
@@ -12,7 +12,8 @@ locals {
 }
 
 dependencies {
-  paths = [local.network]
+  paths = [
+    local.network]
 }
 
 dependency "network" {
@@ -21,6 +22,11 @@ dependency "network" {
 
 inputs = {
   vpc_id = dependency.network.outputs.vpc_id
-  subnet_ids = dependency.network.outputs.public_subnets
-  security_group_id = dependency.network.outputs.vault_security_group_id
+  subnet_id = dependency.network.outputs.public_subnets[0]
+  additional_security_group_id = [
+    dependency.network.outputs.sg_bastion_private_id,
+    dependency.network.outputs.sg_rds_id,
+    dependency.network.outputs.sg_redshift_id,
+    dependency.network.outputs.sg_prometheus_id,
+  ]
 }
