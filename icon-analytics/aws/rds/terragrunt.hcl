@@ -20,9 +20,9 @@ dependency "network" {
 }
 
 inputs = {
-  identifier = "icon-alytics"
-  name = "icon"
-  final_snapshot_identifier = "demodb"
+  identifier = "icon-analytics-${local.vars.env}"
+  name = "icon-${local.vars.env}"
+  final_snapshot_identifier = "icon-main-${local.vars.env}"
 
   subnet_ids = dependency.network.outputs.public_subnets
   vpc_security_group_ids = [dependency.network.outputs.sg_rds_id]
@@ -34,7 +34,7 @@ inputs = {
   major_engine_version = "12"
   engine_version    = "12.3"
 
-  instance_class    = "db.t2.large"
+  instance_class    = "db.t2.medium"
 
   allocated_storage = 5
   storage_encrypted = false
