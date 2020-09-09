@@ -1,5 +1,5 @@
 terraform {
-  source = "github.com/insight-infrastructure/terraform-aws-ec2-superset.git?ref=${local.vars.versions.superset_ec2}"
+  source = "github.com/insight-infrastructure/terraform-aws-superset.git?ref=${local.vars.versions.superset}"
 }
 
 include {
@@ -20,7 +20,16 @@ dependency "network" {
 }
 
 inputs = {
-  vpc_name = dependency.network.outputs.vpc_id
+  vpc_id = dependency.network.outputs.vpc_id
   subnet_ids = dependency.network.outputs.public_subnets
-  security_group_id = dependency.network.outputs.vault_security_group_id
+
+  force_create = true
+
+  additional_security_groups = [
+    dependency.network.outputs.sg_bastion_private_id,
+    dependency.network.outputs.sg_rds_id,
+    dependency.network.outputs.sg_redshift_id,
+    dependency.network.outputs.sg_prometheus_id,
+  ]
+  hostname = "superset"
 }
