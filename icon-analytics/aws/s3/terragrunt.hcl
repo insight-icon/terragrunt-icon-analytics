@@ -11,5 +11,5 @@ locals {
 }
 
 inputs = {
-  block_dump_bucket = local.vars.block_dump_bucket
+  block_dump_bucket = "icon-block-dump-${local.vars.env}"
 }
