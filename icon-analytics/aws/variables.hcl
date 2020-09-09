@@ -4,6 +4,7 @@ locals {
 
   secrets = yamldecode(file(find_in_parent_folders("secrets.yml")))[local.env]
   versions = yamldecode(file("versions.yaml"))[local.env]
+  block_dump_bucket = "icon-block-dump-${local.env}"
 
   environment = {
     dev = {
