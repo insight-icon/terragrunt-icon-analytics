@@ -23,7 +23,7 @@ dependency "network" {
 inputs = {
   vpc_id = dependency.network.outputs.vpc_id
   subnet_id = dependency.network.outputs.public_subnets[0]
-  additional_security_group_id = [
+  additional_security_groups = [
     dependency.network.outputs.sg_bastion_private_id,
     dependency.network.outputs.sg_rds_id,
     dependency.network.outputs.sg_redshift_id,
