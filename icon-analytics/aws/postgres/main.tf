@@ -11,6 +11,7 @@ provider "postgresql" {
   port            = 5432
   username        = var.rds_admin_user
   password        = var.rds_admin_password
+  superuser = false
 //  sslmode         = "require"
 //  connect_timeout = 15
 }

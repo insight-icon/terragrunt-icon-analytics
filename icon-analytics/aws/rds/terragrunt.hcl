@@ -24,6 +24,8 @@ inputs = {
   name = "main${local.vars.env}"
   final_snapshot_identifier = "icon-main-${local.vars.env}"
 
+  publicly_accessible = true # TODO change in prod?
+
   subnet_ids = dependency.network.outputs.public_subnets
   vpc_security_group_ids = [dependency.network.outputs.sg_rds_id]
 
