@@ -9,17 +9,24 @@ include {
 locals {
   vars = read_terragrunt_config(find_in_parent_folders("variables.hcl")).locals
   network = find_in_parent_folders("network")
+  rds = find_in_parent_folders("rds")
+
   user_pw = "${local.vars.secrets.rds_admin_user}:${local.vars.secrets.rds_admin_password}"
-  address = "${dependency.rds.outputs.db_instance_address}:5432/${local.vars.secrets.airflow_db}"
 }
 
 dependencies {
   paths = [
-    local.network]
+    local.network,
+    local.rds,
+  ]
 }
 
 dependency "network" {
   config_path = local.network
+}
+
+dependency "rds" {
+  config_path = local.rds
 }
 
 inputs = {
@@ -33,11 +40,11 @@ inputs = {
   ]
 
 //  TODO: Change to airflow DB
-  airflow_database_conn = "postgres://${local.user_pw}@${local.address}"
+  airflow_database_conn = "postgres://${local.user_pw}@${dependency.rds.outputs.this_db_instance_address}:5432/${local.vars.secrets.airflow_db}"
 
   airflow_executor = "CeleryExecutor"
 
   dags_dependencies = [
-    {name: "scikit-learn", version: 0.23.2}
+    {name: "scikit-learn", version: "0.23.2"}
   ]
 }
