@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "modules/terraform-aws-superset": "https://github.com/insight-infrastructure/terraform-aws-superset",
+    "modules/terraform-aws-ec2-airflow": "https://github.com/insight-infrastructure/terraform-aws-ec2-airflow",
+    "modules/terraform-icon-analytics-aws-network": "https://github.com/insight-icon/terraform-icon-analytics-aws-network",
+    "modules/terraform-aws-redshift": "https://github.com/terraform-aws-modules/terraform-aws-redshift",
+    "modules/terraform-ansible-playbook": "https://github.com/insight-infrastructure/terraform-ansible-playbook"
+  }
+}
