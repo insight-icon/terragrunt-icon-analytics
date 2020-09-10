@@ -20,14 +20,14 @@ dependency "network" {
 }
 
 inputs = {
-  identifier = "icon-analytics-${local.vars.env}"
-  name = "icon-${local.vars.env}"
+  identifier = "icon-analytics-main-${local.vars.env}"
+  name = "main${local.vars.env}"
   final_snapshot_identifier = "icon-main-${local.vars.env}"
 
   subnet_ids = dependency.network.outputs.public_subnets
   vpc_security_group_ids = [dependency.network.outputs.sg_rds_id]
 
-  allocated_storage = 5
+  allocated_storage = 200
 
   engine            = "postgres"
   family = "postgres12"
