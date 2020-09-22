@@ -30,15 +30,15 @@ inputs = {
   vpc_security_group_ids = [dependency.network.outputs.sg_rds_id]
 
   allocated_storage = 200
+  max_allocated_storage = 1024
 
   engine            = "postgres"
   family = "postgres12"
   major_engine_version = "12"
   engine_version    = "12.3"
 
-  instance_class    = "db.t2.medium"
+  instance_class    = "db.t3.medium"
 
-  allocated_storage = 5
   storage_encrypted = false
 
   username = local.vars.secrets.rds_admin_user
@@ -52,5 +52,3 @@ inputs = {
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   deletion_protection = false
 }
-
-
