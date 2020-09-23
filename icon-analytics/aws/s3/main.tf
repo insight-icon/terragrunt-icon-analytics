@@ -23,7 +23,7 @@ resource "aws_iam_policy" "s3_put_logs_policy" {
         {
           "Sid":"ReadWrite",
           "Effect":"Allow",
-          "Action":["s3:GetObject", "s3:PutObject", "s3:ListObjects", "s3:ListObjectsV2"],
+          "Action":["s3:GetObject", "s3:PutObject", "s3:ListObjects", "s3:ListObjectsV2", "s3:HeadObject"],
           "Resource":["${module.block_dump.this_s3_bucket_arn}/*"]
         }
     ]
