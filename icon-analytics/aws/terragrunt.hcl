@@ -19,10 +19,6 @@ provider "aws" {
   skip_region_validation     = true
   skip_requesting_account_id = true
 }
-
-provider "cloudflare" {
-  version = "~> 2.0"
-}
 EOF
 }
 
