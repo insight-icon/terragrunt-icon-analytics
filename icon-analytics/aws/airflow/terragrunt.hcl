@@ -22,6 +22,9 @@ dependency "network" {
 }
 
 inputs = {
+
+//  s3_output_bucket_name = ""
+
   vpc_id = dependency.network.outputs.vpc_id
   subnet_id = dependency.network.outputs.public_subnets[0]
   additional_security_groups = [
@@ -40,7 +43,13 @@ inputs = {
     2049,
     8080,
     80,
-    443
+    443]
+
+  //  TODO: Change to airflow DB
+  airflow_database_conn = "postgres://${local.user_pw}@${dependency.rds.outputs.this_db_instance_address}:5432/${local.vars.secrets.airflow_db}"
+  airflow_executor = "SequentialExecutor"
+  dags_dependencies = [
+    {name: "scikit-learn", version: "0.23.2"}
   ]
 
   playbook_vars = {

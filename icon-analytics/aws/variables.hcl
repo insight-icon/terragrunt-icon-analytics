@@ -1,5 +1,5 @@
 locals {
-  env = "prod"
+  env = "dev"
   region = "us-east-1"
 
   secrets = yamldecode(file(find_in_parent_folders("secrets.yml")))[local.env]
