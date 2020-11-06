@@ -58,3 +58,18 @@ For example, if you were to clone a local deployment to `/Users/example/analytic
 To destroy the deployment, simply run `terragrunt destroy --terragrunt-working-dir /path/to/each/module` in the reverse order to your deployment.
 Make sure that you have activated the appropriate cloud credentials.
 Also note that you are running `terragrunt DESTROY` and not `terragrunt APPLY`, as applying the module again would not do anything unless your source has changed.
+
+## Deployment
+
+Install the prerequisites:
+- terraform
+- terragrunt
+- awscli
+- ansible
+
+For development:
+- npm
+- meta
+    - `npm i -g meta`
+    - Run `meta git clone .` at the base of the repo to clone the modules into the `modules` directory
+
