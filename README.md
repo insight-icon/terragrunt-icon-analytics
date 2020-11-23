@@ -2,7 +2,6 @@
 
 This is a reference architecture to deploy the analytics platform for use with the ICON-ETL exporter in Airflow.
 
-
 ## Deploying the Stack 
 
 The process involves three steps:
