@@ -2,6 +2,10 @@
 
 This is a reference architecture to deploy the analytics platform for use with the ICON-ETL exporter in Airflow.
 
+To perform analytics on ICON, you will first need the infrastructure deployed with this repo. To create new analytics pipelines, you will need to modify the [airflow dags](https://github.com/blockchain-etl/icon-etl-airflow) repo. Best practice would be to fork that repo, ssh into the airflow machine, and replace the dags folder (~/airflow/dags) with your fork. 
+
+A supplemental deployment guide can be found [here](https://docs.google.com/document/d/10Dv2dbULjBCm3Qyt7jYekn1tTyWQV78XtPUGlrchvYk/edit?usp=sharing).
+
 ## Deploying the Stack 
 
 The process involves three steps:
@@ -21,11 +25,11 @@ For a walkthrough on each provider, please check the following links for setting
  
 ### Deployment Setup
  
- A sample secrets file is provided in the repository for your customization.
+A sample secrets file is provided in the repository for your customization.
  
 ##### Prerequisites  
  
- To run all the different tools, you will need the following tools:
+To run all the different tools, you will need the following tools:
  
  1. Terraform
  1. Terragrunt 
@@ -47,14 +51,17 @@ You will need to use Terragrunt to deploy modules in a specific order using the 
 The order you apply modules is important, with some modules being required and others being optional.
 Modules should be applied:
 
-- Network (required)
-- RDS (required if loading data into Airflow)
-- Postgres (required if using RDS)
-- Airflow (required if using Airflow)
-- S3 (required if using Airflow)
-- Superset (required if using Superset)
+- Network 
+- RDS 
+- Airflow (ETL)
+    - For a VM based deployment, apply `airflow`.  For docker (preferred), apply `airflow-docker`. 
+- S3 
+- Superset (visualizations)
+- Redshift (optional)
 
 For example, if you were to clone a local deployment to `/Users/example/analytics/`, you would need to deploy the network module with `terragrunt apply --terragrunt-working-dir /Users/example/analytics/icon-analytics/aws/network/`
+
+Additional DB settings can be applied with `postgres` and `redshift-config` directories. 
 
 ### Destroying Deployment
 
@@ -62,13 +69,7 @@ To destroy the deployment, simply run `terragrunt destroy --terragrunt-working-d
 Make sure that you have activated the appropriate cloud credentials.
 Also note that you are running `terragrunt DESTROY` and not `terragrunt APPLY`, as applying the module again would not do anything unless your source has changed.
 
-## Deployment
-
-Install the prerequisites:
-- terraform
-- terragrunt
-- awscli
-- ansible
+## Development 
 
 For development:
 - npm
