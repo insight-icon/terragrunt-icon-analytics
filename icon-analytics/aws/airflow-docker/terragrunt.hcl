@@ -1,5 +1,5 @@
 terraform {
-  source = "github.com/insight-infrastructure/terraform-aws-superset-docker.git?ref=${local.vars.versions.superset}"
+  source = "github.com/insight-infrastructure/terraform-aws-airflow-docker.git?ref=${local.vars.versions.airflow-vm}"
 }
 
 include {
@@ -22,12 +22,18 @@ dependency "network" {
 inputs = {
   vpc_id = dependency.network.outputs.vpc_id
   subnet_id = dependency.network.outputs.public_subnets[0]
-
-  instance_type = local.vars.environment.superset_instance_type
-
   additional_security_groups = [
     dependency.network.outputs.sg_rds_id,
     dependency.network.outputs.sg_redshift_id,
   ]
-  hostname = "superset"
+
+  instance_type = local.vars.environment.airflow_instance_type
+  root_volume_size = local.vars.environment.airflow_root_volume_size
+
+  open_ports = [
+    22,
+    80,
+    443,
+    8080,
+  ]
 }

@@ -36,6 +36,10 @@ For a walkthrough on each provider, please check the following links for setting
 
 Generate a new SSH keypair and include the file path in the secrets file.
 
+```shell script
+ssh-keygen -b 4096
+```
+
 ### Running Deployment
 
 Ensure that your cloud credentials are accessible to Terragrunt, either as environment variables, or some other utility (like aws-vault for AWS).

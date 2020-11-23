@@ -7,10 +7,16 @@ locals {
 
   environment = {
     dev = {
-      cluster_node_type = "dc1.large"
+      airflow_instance_type = "r5.large"
+      airflow_root_volume_size = 200
+      superset_instance_type = "t2.medium"
+      cluster_node_type = "dc1.large" # redshift
     }
     prod = {
-      cluster_node_type = "dc1.large"
+      airflow_instance_type = "t3.large" # Could run out of memory on mainnet
+      airflow_root_volume_size = 200
+      superset_instance_type = "t2.small"
+      cluster_node_type = "dc1.large" # redshift
     }
   }[local.env]
 
