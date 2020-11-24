@@ -1,0 +1,208 @@
+databases:
+  - database_name: icon-prod
+    extra: "{\r\n    \"metadata_params\": {},\r\n    \"engine_params\": {},\r\n    \"\
+    metadata_cache_timeout\": {},\r\n    \"schemas_allowed_for_csv_upload\": []\r\n\
+    }"
+    sqlalchemy_uri: postgresql+psycopg2://superset_user:changemenow@this_db_instance_address/postgres
+    tables:
+      - columns:
+          - column_name: timestamp_epoch_s
+            expression: timestamp / 10^6
+            is_dttm: true
+            python_date_format: epoch_s
+          - column_name: value_in_icx
+            expression: value / 10^18
+          - column_name: step_limit
+            type: NUMERIC(38, 0)
+          - column_name: value
+            type: NUMERIC(38, 0)
+          - column_name: nonce
+            type: NUMERIC(38, 0)
+          - column_name: fee
+            type: NUMERIC(38, 0)
+          - column_name: data_type
+            type: VARCHAR
+          - column_name: block_hash
+            type: VARCHAR
+          - column_name: from_address
+            type: VARCHAR
+          - column_name: to_address
+            type: VARCHAR
+          - column_name: data
+            type: VARCHAR
+          - column_name: signature
+            type: VARCHAR
+          - column_name: hash
+            type: VARCHAR
+          - column_name: version
+            type: VARCHAR
+          - column_name: transaction_index
+            type: BIGINT
+          - column_name: block_number
+            type: BIGINT
+          - column_name: timestamp
+            type: BIGINT
+          - column_name: nid
+            type: INTEGER
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: transactions
+      - columns:
+          - column_name: timestamp_epoch_s
+            expression: timestamp / 10^6
+            is_dttm: true
+            python_date_format: epoch_s
+          - column_name: merkle_root_hash
+            type: VARCHAR
+          - column_name: parent_hash
+            type: VARCHAR
+          - column_name: next_leader
+            type: VARCHAR
+          - column_name: peer_id
+            type: VARCHAR
+          - column_name: signature
+            type: VARCHAR
+          - column_name: hash
+            type: VARCHAR
+          - column_name: version
+            type: VARCHAR
+          - column_name: timestamp
+            type: BIGINT
+          - column_name: number
+            type: BIGINT
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: blocks
+      - columns:
+          - column_name: cumulative_step_used
+            type: NUMERIC(38, 0)
+          - column_name: step_price
+            type: NUMERIC(38, 0)
+          - column_name: step_used
+            type: NUMERIC(38, 0)
+          - column_name: transaction_hash
+            type: VARCHAR
+          - column_name: block_hash
+            type: VARCHAR
+          - column_name: score_address
+            type: VARCHAR
+          - column_name: status
+            type: VARCHAR
+          - column_name: transaction_index
+            type: INTEGER
+          - column_name: block_number
+            type: INTEGER
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: receipts
+      - columns:
+          - column_name: transaction_hash
+            type: VARCHAR
+          - column_name: block_hash
+            type: VARCHAR
+          - column_name: data
+            type: VARCHAR
+          - column_name: address
+            type: VARCHAR
+          - column_name: indexed
+            type: VARCHAR
+          - column_name: transaction_index
+            type: INTEGER
+          - column_name: block_number
+            type: INTEGER
+          - column_name: log_index
+            type: INTEGER
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: logs
+      - columns:
+          - column_name: timestamp
+            is_dttm: true
+            type: TIMESTAMP WITH TIME ZONE
+          - column_name: value
+            type: NUMERIC(38, 0)
+          - column_name: data_type
+            type: VARCHAR
+          - column_name: from_address
+            type: VARCHAR
+          - column_name: to_address
+            type: VARCHAR
+          - column_name: data
+            type: VARCHAR
+        main_dttm_col: timestamp
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: current_period
+      - columns:
+          - column_name: timestamp
+            is_dttm: true
+            type: TIMESTAMPZ
+          - column_name: value
+            type: NUMERIC(38, 0)
+          - column_name: from_address
+            type: VARCHAR
+          - column_name: to_address
+            type: VARCHAR
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: reduced_trans
+      - columns:
+          - column_name: address
+            type: VARCHAR
+          - column_name: amount
+            type: NUMERIC
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: balances
+      - columns:
+          - column_name: address
+            type: VARCHAR
+          - column_name: amount
+            type: NUMERIC
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: debits
+      - columns:
+          - column_name: address
+            type: VARCHAR
+          - column_name: amount
+            type: NUMERIC
+        metrics:
+          - expression: COUNT(*)
+            metric_name: count
+            metric_type: count
+            verbose_name: COUNT(*)
+        schema: public
+        table_name: credits

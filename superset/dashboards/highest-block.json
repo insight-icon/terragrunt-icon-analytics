@@ -1,0 +1,41 @@
+{
+  "adhoc_filters": [],
+  "datasource": "1__table",
+  "granularity_sqla": "timestamp_epoch_s",
+  "header_font_size": 0.4,
+  "metric": {
+    "aggregate": "MAX",
+    "column": {
+      "column_name": "number",
+      "description": null,
+      "expression": null,
+      "filterable": true,
+      "groupby": true,
+      "id": 1,
+      "is_dttm": false,
+      "optionName": "_col_number",
+      "python_date_format": null,
+      "type": "BIGINT",
+      "verbose_name": null
+    },
+    "expressionType": "SIMPLE",
+    "hasCustomLabel": false,
+    "isNew": false,
+    "label": "MAX(number)",
+    "optionName": "metric_34kkg9m2hl1_apdk5z82fnu",
+    "sqlExpression": null
+  },
+  "queryFields": {
+    "metric": "metrics"
+  },
+  "subheader": "highest block",
+  "subheader_font_size": 0.15,
+  "time_range": "No filter",
+  "time_range_endpoints": [
+    "inclusive",
+    "exclusive"
+  ],
+  "url_params": {},
+  "viz_type": "big_number_total",
+  "y_axis_format": ",d"
+}

@@ -1,0 +1,37 @@
+{
+  "adhoc_filters": [],
+  "color_scheme": "supersetColors",
+  "datasource": "10__table",
+  "granularity_sqla": "timestamp",
+  "groupby": [
+    "to_address"
+  ],
+  "label_colors": {},
+  "labels_outside": true,
+  "metric": {
+    "aggregate": null,
+    "column": null,
+    "expressionType": "SQL",
+    "hasCustomLabel": false,
+    "isNew": false,
+    "label": "SUM(value) / 10^18",
+    "optionName": "metric_t8rvy1t18pe_4n415gv0mir",
+    "sqlExpression": "SUM(value) / 10^18"
+  },
+  "number_format": ",d",
+  "pie_label_type": "key_value",
+  "queryFields": {
+    "groupby": "groupby",
+    "metric": "metrics"
+  },
+  "row_limit": 50000,
+  "show_labels": true,
+  "show_legend": false,
+  "time_range": "Last day",
+  "time_range_endpoints": [
+    "inclusive",
+    "exclusive"
+  ],
+  "url_params": {},
+  "viz_type": "pie"
+}
