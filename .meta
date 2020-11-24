@@ -8,6 +8,8 @@
     "modules/terraform-icon-analytics-aws-network": "https://github.com/insight-icon/terraform-icon-analytics-aws-network",
     "modules/terraform-aws-redshift": "https://github.com/terraform-aws-modules/terraform-aws-redshift",
     "modules/terraform-ansible-playbook": "https://github.com/insight-infrastructure/terraform-ansible-playbook",
-    "modules/icon-etl-airflow": "https://github.com/insight-icon/icon-etl-airflow"
+    "modules/icon-etl-airflow": "https://github.com/insight-icon/icon-etl-airflow",
+    "modules/icon-etl": "https://github.com/blockchain-etl/icon-etl",
+    "modules/airflow-docker-compose": "https://github.com/insight-infrastructure/airflow-docker-compose"
   }
 }

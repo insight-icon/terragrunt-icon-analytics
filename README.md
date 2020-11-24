@@ -8,13 +8,16 @@ A supplemental deployment guide can be found [here](https://docs.google.com/docu
 
 ## Deploying the Stack 
 
-The process involves three steps:
+The process involves four steps:
 
 1. Setting up accounts, projects, and API keys on your cloud provider. 
 1. Configure the necessary files and ssh keys. 
 1. Run the deployment
+1. Configure applications (Superset and Airflow)
 
-### Cloud Providers  
+After these steps, you will then be able to run the Airflow DAGs linked above to build data pipelines 
+
+### Account Setup   
 
 Before running on any cloud, signup and provide payment details to create an active account and project.
 You will need API keys to any provider that you intend on running on.
@@ -25,51 +28,94 @@ For a walkthrough on each provider, please check the following links for setting
  
 ### Deployment Setup
  
-A sample secrets file is provided in the repository for your customization.
+A sample secrets file is provided in the repository for your customization. Make a copy of the `secrets.yml.example` and name `secrets.yml`. Edit the file to your needs.  You are able to run a dev and prod setup.  
+
+You will also need ssh keys. If you put a password on the SSH key, you will be prompted for it on deployment.  
+
+```shell script
+# Generate ssh key 
+ssh-keygen -b 4096
+```
+Take note of the path and insert it into secrets.yml file for the `public_key_path` (*.pub) and `private_key_path`. 
  
 ##### Prerequisites  
  
 To run all the different tools, you will need the following tools:
  
- 1. Terraform
- 1. Terragrunt 
- 1. Ansible (Not supported on windows without WSL)
- 
-##### SSH Keys
-
-Generate a new SSH keypair and include the file path in the secrets file.
-
-```shell script
-ssh-keygen -b 4096
-```
+1. terraform - version 0.13+
+1. terragrunt - version 0.25.x (not newest 0.26)
+1. ansible (Not supported on windows without WSL) 
 
 ### Running Deployment
 
-Ensure that your cloud credentials are accessible to Terragrunt, either as environment variables, or some other utility (like aws-vault for AWS).
+**Preflight** 
+
+Before running the deployment, ensure that your cloud credentials are accessible to Terragrunt, either as environment variables, or some other utility (like aws-vault for AWS). You will also may want to modify various settings like DB / instance sizes before deploying. To do this, in the `icon-analytics/aws/variables.tf` file, modify [the fields in the environment](https://github.com/insight-icon/terragrunt-icon-analytics/blob/master/icon-analytics/aws/variables.hcl#L16) (prod by default) that you need. 
+
+**Deploying** 
+
 You will need to use Terragrunt to deploy modules in a specific order using the command `terragrunt apply --terragrunt-working-dir /path/to/each/module`.
 
 The order you apply modules is important, with some modules being required and others being optional.
-Modules should be applied:
 
 - Network 
-- RDS 
+- RDS
+    - Take note of output `this_db_instance_address` which is needed by Airflow post-deployment and Superset pre-deployment.  
+- Redshift (optional)
 - Airflow (ETL)
     - For a VM based deployment, apply `airflow`.  For docker (preferred), apply `airflow-docker`. 
 - S3 
+    - Creates buckets for Airflow to push data 
 - Superset (visualizations)
-- Redshift (optional)
+    - To bootstrap the database connection, the `db_instance_address` needs to be populated in the `superset/sources/database_sources.yaml` by copying the `database_sources.example` and filling out the appropriate details along with items from the `secrets.yaml`. 
 
 For example, if you were to clone a local deployment to `/Users/example/analytics/`, you would need to deploy the network module with `terragrunt apply --terragrunt-working-dir /Users/example/analytics/icon-analytics/aws/network/`
 
 Additional DB settings can be applied with `postgres` and `redshift-config` directories. 
 
-### Destroying Deployment
+##### Destroying Deployment
 
 To destroy the deployment, simply run `terragrunt destroy --terragrunt-working-dir /path/to/each/module` in the reverse order to your deployment.
 Make sure that you have activated the appropriate cloud credentials.
 Also note that you are running `terragrunt DESTROY` and not `terragrunt APPLY`, as applying the module again would not do anything unless your source has changed.
 
-## Development 
+##### Running Multiple Environments 
+
+To run multiple environments, put a new key in the `secrets.yml` file like the `prod` section. Then in the `icon-analytics/aws/variables.tf` file, change the `env` field to your environment. You will also find environment specific options there. 
+
+### Configuring Applications 
+
+After deploying the applications, navigate to the UI and follow these steps.
+
+**Airflow** 
+- Navigate the the variables tab ()
+
+**Superset**
+
+
+### Relevant Repos
+
+**Analytics** 
+- [blockchain-etl/icon-etl](https://github.com/blockchain-etl/icon-etl)
+    - Parser for the blockchain
+- [blockchain-etl/icon-etl-airflow](https://github.com/blockchain-etl/icon-etl-airflow)
+    - Airflow DAGs (data pipelines) to perform analytics on 
+    
+**Deployment** 
+- [insight-infrastructure/superset-docker-compose](https://github.com/insight-infrastructure/superset-docker-compose)
+    - Use this repo to run Superset locally 
+- [insight-infrastructure/airflow-docker-compose](https://github.com/insight-infrastructure/airflow-docker-compose)
+    - Use this repo to run Airflow locally 
+- [insight-infrastructure/terraform-aws-superset-docker](https://github.com/insight-infrastructure/terraform-aws-superset-docker) 
+- [insight-icon/terraform-icon-analytics-aws-network](https://github.com/insight-icon/terraform-icon-analytics-aws-network)
+- [insight-infrastructure/terraform-aws-superset-docker](https://github.com/insight-infrastructure/terraform-aws-superset-docker)
+- [insight-infrastructure/ansible-role-superset-docker](https://github.com/insight-infrastructure/ansible-role-superset-docker)
+- [terraform-aws-redshift](https://github.com/terraform-aws-modules/terraform-aws-redshift)
+- [terraform-aws-airflow-docker](https://github.com/insight-infrastructure/terraform-aws-airflow-docker)
+
+
+
+### Development 
 
 For development:
 - npm

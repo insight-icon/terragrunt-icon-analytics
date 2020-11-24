@@ -25,6 +25,8 @@ inputs = {
 
   instance_type = local.vars.environment.superset_instance_type
 
+  superset_database_import_yaml_path = "${get_terragrunt_dir()}/../../../superset/sources/database_sources.yaml"
+
   additional_security_groups = [
     dependency.network.outputs.sg_rds_id,
     dependency.network.outputs.sg_redshift_id,

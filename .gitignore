@@ -9,6 +9,7 @@
 .terraform/
 
 secrets.yml
+superset/sources/database_sources.yaml
 
 modules/*
 !/**/.gitkeep
