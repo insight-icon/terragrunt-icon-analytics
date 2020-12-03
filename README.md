@@ -65,7 +65,7 @@ The order you apply modules is important, with some modules being required and o
 - Airflow (ETL)
     - For a VM based deployment, apply `airflow`.  For docker (preferred), apply `airflow-docker`. 
 - S3 
-    - Creates buckets for Airflow to push data 
+    - Creates buckets for Airflow to push data.  Take note of the bucket name, you will need it later. 
 - Superset (visualizations)
     - To bootstrap the database connection, the `db_instance_address` needs to be populated in the `superset/sources/database_sources.yaml` by copying the `database_sources.example` and filling out the appropriate details along with items from the `secrets.yaml`. 
 
@@ -88,10 +88,24 @@ To run multiple environments, put a new key in the `secrets.yml` file like the `
 After deploying the applications, navigate to the UI and follow these steps.
 
 **Airflow** 
-- Navigate the the variables tab ()
+
+After deploying Airflow, navigate to `airflow.yourdomain.com` and login with the credentials from your `secrets.yaml`. You will need to set some variables in order to run the DAGs. 
+
+- Navigate the the variables tab inside `Admin`
+- Fill in the appropriate values in the `/airflow/variables.json` per the s3 bucket you created 
+- Choose import from file and navigate to the `/airflow/variables.json`
+- Go to the `Connections` tab in `Admin`
+- Create a `postgres` connection with the details from deploying the `rds` module. 
+    - If using redshift, populate this connection as well. 
+- Your dags at this point should sync from the `icon-etl-airflow` repository.  If you want to make modifications, ssh into the airflow instance and change the `DAGS_REPO` in the `.env` file to point to your own fork of the dags repo. Syncing happens automatically on a schedule per the `git-sync` service in the docker-compose.
 
 **Superset**
 
+After deploying superset, navigate to `superset.yourdomain.com` and login with the credentials from your `secrets.yaml`. You will need to first connect to your backends.  
+
+You can either populate these connection values manually into superset or import them via a config file provided. To import it via file, make a copy of the `./superset/sources/database_sources.yaml.example` and remove the `.example` suffix.  Then you will need to change the values in line 6 for the `sqlalchemy_uri` to reflect the outputs of the corresponding backend (`this_db_instance_address`) and username / password from the `secrets.yaml`. 
+
+To import charts, import them from the `superset/charts` directory.  
 
 ### Relevant Repos
 
@@ -112,8 +126,6 @@ After deploying the applications, navigate to the UI and follow these steps.
 - [insight-infrastructure/ansible-role-superset-docker](https://github.com/insight-infrastructure/ansible-role-superset-docker)
 - [terraform-aws-redshift](https://github.com/terraform-aws-modules/terraform-aws-redshift)
 - [terraform-aws-airflow-docker](https://github.com/insight-infrastructure/terraform-aws-airflow-docker)
-
-
 
 ### Development 
 
