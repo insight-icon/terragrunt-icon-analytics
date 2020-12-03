@@ -1,0 +1,10 @@
+{
+  "icon_cloud_provider": "aws",
+  "icon_database": "postgres",
+  "icon_export_start_date": "2020-09-22",
+  "icon_load_start_date": "2020-09-22",
+  "icon_maintenance_start_date": "2020-10-28",
+  "icon_nightly_reports_start_date": "2020-11-01",
+  "icon_output_bucket": "icon-{NAMESPACE}-block-raw-prod",
+  "icon_provider_uris": "https://ctz.solidwallet.io/api/v3"
+}
