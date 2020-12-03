@@ -20,6 +20,6 @@ dependency "airflow" {
 }
 
 inputs = {
-  block_dump_bucket = "icon-block-raw-${local.vars.env}"
+  block_dump_bucket = "${local.vars.secrets.namespace}-icon-block-raw-${local.vars.env}"
   airflow_instance_profile_name = dependency.airflow.outputs.instance_profile_name
 }
