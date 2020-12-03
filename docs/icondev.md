@@ -12,11 +12,18 @@ If you are serious about doing analytics on ICON, please contact the Insight tea
 
 | Component | Description | 
 | :--- | :--- | 
-| **Block Extractor** | Uses [icon-etl](https://github.com/blockchain-etl/icon-etl) to run looped HTTP requests against a node to pull data between block ranges and output them to a CSV or JSON file. Extracts [Ricard - tables...] |
+| **Block Extractor** | Uses [icon-etl](https://github.com/blockchain-etl/icon-etl) to run looped HTTP requests against a node to pull data between block ranges and output them to a CSV or JSON file. Extracts [these tables](#tables) section. |
 | **Object Storage (S3)** | Transient data writes between block extractor and output for reports. | 
 | **[Apache Airflow](https://airflow.apache.org/)** | Workflow orchestrator that assembles steps in data pipelines in a collection of tasks.  Pipeline are written in python and can be as simple as running a series of SQL queries in order for report generation. |
 | **Postgres / Redshift** | Main transaction DB for storing records. This DB is larger than the chain itself and takes over a week to sync.  Please get in touch with Insight team to get copy / access.  Redshift populated by Airflow.  Mind costs when using.  Postgres is generally good enough. |
 | **[Apache Superset](https://superset.apache.org/)** | Open source dashboarding tool that connects to relational backends to produce high quality charts and interactive dashboards.  There are many tools to build visualizations (ie d3.js, plotly, etc) which are great and might be a better fit for your use case.  This tool was chosen as it is an open source alternative to Tableau and allows for the charts to be embedded via iframes into any other tools used in the ecosystem. |
+
+### Tables 
+
+[Richard]
+| Table | Description | 
+| :--- | :--- |  
+
 
 ### Relevant Repos 
 
