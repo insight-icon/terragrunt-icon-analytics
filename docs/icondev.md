@@ -6,7 +6,7 @@ To analyze the ICON Blockchain, data must be loaded into a relational database w
 
 If you are serious about doing analytics on ICON, please contact the Insight team for more information on running the setup. 
 
-![]()
+![](https://raw.githubusercontent.com/insight-icon/terragrunt-icon-analytics/master/docs/stack-diagram.png)
 
 ### Components 
 
